@@ -199,7 +199,9 @@ public class OnlineBankingSystem {
             System.out.println("\nAdmin Menu:");
             System.out.println("1. View All Accounts");
             System.out.println("2. View Account by User ID");
-            System.out.println("3. Logout");
+            System.out.println("3. Deposit into Account by User ID");
+            System.out.println("4. Withdraw from Account by User ID");
+            System.out.println("5. Logout");
             System.out.print("Enter your choice: ");
             int choice = scanner.nextInt();
             scanner.nextLine(); // Consume newline
@@ -211,22 +213,58 @@ public class OnlineBankingSystem {
                     }
                     break;
                 case 2:
-                    System.out.print("Enter User ID to view account details: ");
-                    String userId = scanner.nextLine();
-                    Account account = accounts.get(userId);
-                    if (account != null) {
-                        account.displayAccountInfo();
-                    } else {
-                        System.out.println("Account not found.");
-                    }
+                    viewAccountById();
                     break;
                 case 3:
+                    depositIntoAccountById();
+                    break;
+                case 4:
+                    withdrawFromAccountById();
+                    break;
+                case 5:
                     exit = true;
                     System.out.println("Admin logged out.");
                     break;
                 default:
                     System.out.println("Invalid choice. Please try again.");
             }
+        }
+    }
+
+    private static void viewAccountById() {
+        System.out.print("Enter User ID to view account details: ");
+        String userId = scanner.nextLine();
+        Account account = accounts.get(userId);
+        if (account != null) {
+            account.displayAccountInfo();
+        } else {
+            System.out.println("Account not found.");
+        }
+    }
+
+    private static void depositIntoAccountById() {
+        System.out.print("Enter User ID to deposit funds: ");
+        String userId = scanner.nextLine();
+        Account account = accounts.get(userId);
+        if (account != null) {
+            System.out.print("Enter amount to deposit: $");
+            double amount = scanner.nextDouble();
+            account.deposit(amount);
+        } else {
+            System.out.println("Account not found.");
+        }
+    }
+
+    private static void withdrawFromAccountById() {
+        System.out.print("Enter User ID to withdraw funds: ");
+        String userId = scanner.nextLine();
+        Account account = accounts.get(userId);
+        if (account != null) {
+            System.out.print("Enter amount to withdraw: $");
+            double amount = scanner.nextDouble();
+            account.withdraw(amount);
+        } else {
+            System.out.println("Account not found.");
         }
     }
 }
